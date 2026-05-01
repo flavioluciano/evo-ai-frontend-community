@@ -22,8 +22,12 @@ export default function useRoles(options: UseRolesOptions = {}) {
     try {
       const filters = type ? { type } : undefined;
       const response = loadFull ? await fetchRolesFull(filters) : await fetchRoles(filters);
-      // fetchRoles returns RoleResponse (PaginatedResponse), fetchRolesFull may return different structure
-      const roles = Array.isArray(response.data) ? response.data : Array.isArray(response) ? response : [];
+      // fetchRolesFull uses extractData → array directly; fetchRoles uses extractResponse → { data: Role[] }
+      const roles = Array.isArray(response)
+        ? response
+        : Array.isArray(response?.data)
+          ? response.data
+          : [];
       setRoles(roles);
     } catch (error) {
       console.error('Erro ao buscar roles:', error);

@@ -21,11 +21,11 @@ const ChangePassword = () => {
         password: z
           .string()
           .min(1, { message: t('validation.password.required') })
-          .min(8, { message: t('validation.password.minLength') }),
+          .min(6, { message: t('validation.password.minLength') }),
         confirmPassword: z
           .string()
           .min(1, { message: t('validation.confirmPassword.required') })
-          .min(8, { message: t('validation.confirmPassword.minLength') }),
+          .min(6, { message: t('validation.confirmPassword.minLength') }),
       }),
     [t],
   );

@@ -57,10 +57,7 @@ const Setup: React.FC = () => {
       password: z
         .string()
         .min(1, { message: t('form.password.errors.required') })
-        .min(8, { message: t('form.password.errors.minLength') })
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d])/, {
-          message: t('form.password.errors.complexity'),
-        }),
+        .min(6, { message: t('form.password.errors.minLength') }),
       password_confirmation: z
         .string()
         .min(1, { message: t('form.confirmPassword.errors.required') }),

@@ -22,6 +22,8 @@ export interface Role {
   updated_at: string;
   permissions_count?: number;
   users_count?: number;
+  /** Present on roles/full API responses */
+  permissions?: Record<string, string[]>;
 }
 
 export interface RoleResponse extends PaginatedResponse<Role> {}

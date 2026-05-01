@@ -127,7 +127,7 @@ export const Auth: React.FC = () => {
     password: z
       .string()
       .min(1, { message: t('auth.errors.password.required') })
-      .min(8, { message: t('auth.errors.password.minLength') }),
+      .min(6, { message: t('auth.errors.password.minLength') }),
   });
 
   // Schema de validação para cadastro
@@ -144,11 +144,8 @@ export const Auth: React.FC = () => {
       password: z
         .string()
         .min(1, { message: t('auth.errors.password.required') })
-        .min(8, { message: t('auth.errors.password.minLength') })
-        .max(128, { message: t('auth.errors.password.maxLength') })
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,128}$/, {
-          message: t('auth.errors.password.pattern'),
-        }),
+        .min(6, { message: t('auth.errors.password.minLength') })
+        .max(128, { message: t('auth.errors.password.maxLength') }),
       confirmPassword: z.string().min(1, { message: t('auth.errors.confirmPassword.required') }),
     })
     .refine(data => data.password === data.confirmPassword, {

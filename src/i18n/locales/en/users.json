@@ -86,10 +86,12 @@
         "cannotChange": "The email cannot be changed after creation"
       },
       "role": {
-        "label": "Role *"
+        "label": "Role *",
+        "placeholder": "Select role"
       },
       "availability": {
         "label": "Availability Status",
+        "placeholder": "Select status",
         "online": "Online",
         "busy": "Busy",
         "offline": "Offline"

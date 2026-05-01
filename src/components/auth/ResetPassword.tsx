@@ -21,12 +21,8 @@ const resetPasswordSchema = (t: any) => z
   .object({
     password: z
       .string()
-      .min(8, t('auth.errors.password.minLength'))
-      .max(128, t('auth.errors.password.maxLength'))
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,128}$/,
-        t('auth.errors.password.pattern')
-      ),
+      .min(6, t('auth.errors.password.minLength'))
+      .max(128, t('auth.errors.password.maxLength')),
     password_confirmation: z.string().min(1, t('auth.errors.confirmPassword.required')),
   })
   .refine(data => data.password === data.password_confirmation, {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import usersService from '@/services/users/usersService';
 import useRoles from '@/hooks/useRoles';
 import type { User, UserFormData, UserUpdateData } from '@/types/users';
+import type { Role } from '@/types/auth';
 import { Loader2 } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -35,6 +36,33 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
   const { roles: systemRoles } = useRoles({
     loadFull: true,
   });
+
+  const displayRoles: Role[] = useMemo(() => {
+    if (systemRoles.length > 0) return systemRoles;
+    const blank = '';
+    return [
+      {
+        id: blank,
+        key: 'agent',
+        name: 'Agent',
+        description: blank,
+        system: true,
+        type: 'user',
+        created_at: blank,
+        updated_at: blank,
+      },
+      {
+        id: blank,
+        key: 'account_owner',
+        name: 'Account Owner',
+        description: blank,
+        system: true,
+        type: 'user',
+        created_at: blank,
+        updated_at: blank,
+      },
+    ];
+  }, [systemRoles]);
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<UserFormData>({
@@ -68,6 +96,14 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
     setErrors({});
   }, [user]);
 
+  useEffect(() => {
+    if (user || displayRoles.length === 0) return;
+    setFormData(prev => {
+      if (displayRoles.some(r => r.key === prev.role)) return prev;
+      return { ...prev, role: displayRoles[0].key };
+    });
+  }, [displayRoles, user]);
+
   const handleFieldChange = (field: keyof UserFormData, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -97,11 +133,13 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
       newErrors.email = t('form.validation.emailInvalid');
     }
 
+    const minPw = 6;
+
     if (!user) {
       // Validações apenas para criação
       if (!formData.password) {
         newErrors.password = t('form.validation.passwordRequired');
-      } else if (formData.password.length < 6) {
+      } else if (formData.password.length < minPw) {
         newErrors.password = t('form.validation.passwordMinLength');
       }
 
@@ -110,7 +148,7 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
       }
     } else if (formData.password) {
       // Validações para atualização (senha opcional)
-      if (formData.password.length < 6) {
+      if (formData.password.length < minPw) {
         newErrors.password = t('form.validation.passwordMinLength');
       }
 
@@ -217,11 +255,11 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
               onValueChange={value => handleFieldChange('role', value)}
               disabled={loading}
             >
-              <SelectTrigger className="bg-sidebar border-sidebar-border text-sidebar-foreground">
-                <SelectValue />
+              <SelectTrigger className="bg-sidebar border-sidebar-border text-sidebar-foreground w-full min-w-0">
+                <SelectValue placeholder={t('form.fields.role.placeholder')} />
               </SelectTrigger>
-              <SelectContent>
-                {systemRoles.map(role => (
+              <SelectContent className="z-[300]" position="popper">
+                {displayRoles.map(role => (
                   <SelectItem key={role.key} value={role.key}>
                     {role.name}
                   </SelectItem>
@@ -237,10 +275,10 @@ export default function UserFormModal({ isOpen, onClose, user, onSuccess }: User
               onValueChange={value => handleFieldChange('availability', value)}
               disabled={loading}
             >
-              <SelectTrigger className="bg-sidebar border-sidebar-border text-sidebar-foreground">
-                <SelectValue />
+              <SelectTrigger className="bg-sidebar border-sidebar-border text-sidebar-foreground w-full min-w-0">
+                <SelectValue placeholder={t('form.fields.availability.placeholder')} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="z-[300]" position="popper">
                 <SelectItem value="online">{t('form.fields.availability.online')}</SelectItem>
                 <SelectItem value="busy">{t('form.fields.availability.busy')}</SelectItem>
                 <SelectItem value="offline">{t('form.fields.availability.offline')}</SelectItem>

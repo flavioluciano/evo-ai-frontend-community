@@ -86,10 +86,12 @@
         "cannotChange": "O email não pode ser alterado após a criação"
       },
       "role": {
-        "label": "Função *"
+        "label": "Função *",
+        "placeholder": "Selecione a função"
       },
       "availability": {
         "label": "Status de Disponibilidade",
+        "placeholder": "Selecione o status",
         "online": "Online",
         "busy": "Ocupado",
         "offline": "Offline"

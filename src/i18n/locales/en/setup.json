@@ -31,7 +31,7 @@
       "placeholder": "Password",
       "errors": {
         "required": "Password is required",
-        "minLength": "Must be at least 8 characters",
+        "minLength": "Must be at least 6 characters",
         "complexity": "Must contain uppercase, lowercase, number and special character"
       }
     },
