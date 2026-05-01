@@ -30,6 +30,7 @@ import {
   FileText,
   Pin,
   Archive,
+  RefreshCw,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useChatContext } from '@/contexts/chat/ChatContext';
@@ -43,6 +44,9 @@ import ConversationsFilter from '../conversation/ConversationsFilter';
 import GlobalSearchPanel from '../search/GlobalSearchPanel';
 import { BaseFilter } from '@/types/core';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useUserPermissions } from '@/hooks/useUserPermissions';
+import { toast } from 'sonner';
+import { extractError } from '@/utils/apiHelpers';
 import { useDebounce } from '@/hooks/useDebounce';
 import chatService from '@/services/chat/chatService';
 import type {
@@ -103,7 +107,9 @@ const ChatSidebar = ({
   onDeleteConversation,
 }: ChatSidebarProps) => {
   const { t } = useLanguage('chat');
+  const { can, isReady: permissionsReady } = useUserPermissions();
   const chatContext = useChatContext();
+  const applyFiltersAndReload = chatContext.applyFiltersAndReload;
   // Explicitly type conversations to ensure TypeScript recognizes it has 'state'
   const conversations = chatContext.conversations as typeof chatContext.conversations & {
     state: {
@@ -126,6 +132,7 @@ const ChatSidebar = ({
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [isLoadingMoreConversations, setIsLoadingMoreConversations] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
+  const [syncingEvolutionChats, setSyncingEvolutionChats] = useState(false);
   const sidebarScrollRef = useRef<HTMLDivElement | null>(null);
   const loadingMoreRef = useRef(false);
 
@@ -226,6 +233,26 @@ const ChatSidebar = ({
     setConversationFilters([]);
     onFilterClear();
   };
+
+  const handleSyncEvolutionChats = useCallback(async () => {
+    setSyncingEvolutionChats(true);
+    try {
+      const result = await chatService.syncWhatsappConversationsFromEvolution();
+      if (result.queued === 0) {
+        toast.warning(t('messages.syncWhatsappConversationsNone'));
+      } else {
+        toast.success(t('messages.syncWhatsappConversationsQueued', { count: result.queued }));
+        window.setTimeout(() => {
+          void applyFiltersAndReload(filters.state.activeFilters);
+        }, 5000);
+      }
+    } catch (error: unknown) {
+      console.error('Evolution chats sync:', error);
+      toast.error(extractError(error).message || t('messages.syncWhatsappConversationsError'));
+    } finally {
+      setSyncingEvolutionChats(false);
+    }
+  }, [t, applyFiltersAndReload, filters.state.activeFilters]);
 
   const pagination = conversations.state.conversationsPagination;
   const currentPage = pagination?.page || 1;
@@ -645,6 +672,28 @@ const ChatSidebar = ({
               <Filter className="h-4 w-4" />
               {t('chatSidebar.filtersButton')}
             </Button>
+
+            {permissionsReady && can('conversations', 'update') ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => void handleSyncEvolutionChats()}
+                disabled={
+                  syncingEvolutionChats ||
+                  filters.state.isApplyingFilters ||
+                  conversations.state.conversationsLoading
+                }
+                className="h-8 px-2 cursor-pointer"
+                title={t('chatSidebar.syncWhatsappTooltip')}
+                data-tour="chat-sync-evolution-button"
+              >
+                <RefreshCw
+                  className={`h-4 w-4 ${syncingEvolutionChats ? 'animate-spin' : ''}`}
+                />
+                <span className="hidden sm:inline ml-1">{t('chatSidebar.syncWhatsapp')}</span>
+              </Button>
+            ) : null}
           </div>
         </div>
         {showArchived && (

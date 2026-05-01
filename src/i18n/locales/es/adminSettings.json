@@ -235,17 +235,14 @@
     },
     "evolutionGo": {
       "tabTitle": "Evolution Go",
+      "instanceCredentialsHint": "El UUID y el token de instancia se crean por canal de WhatsApp al emparejar el codigo QR; no son ajustes globales aqui.",
       "fields": {
         "apiUrl": "URL de API",
-        "adminSecret": "Secreto de Admin",
-        "instanceId": "ID de Instancia",
-        "instanceSecret": "Secreto de Instancia"
+        "adminSecret": "Secreto de Admin"
       },
       "placeholders": {
         "apiUrl": "https://evolution-go.ejemplo.com",
-        "adminSecret": "Ingrese el nuevo secreto de admin",
-        "instanceId": "Su Evolution Go Instance ID",
-        "instanceSecret": "Ingrese el nuevo secreto de instancia"
+        "adminSecret": "Ingrese el nuevo secreto de admin"
       },
       "saveSuccess": "Configuracion de Evolution Go guardada exitosamente",
       "saveError": "Error al guardar la configuracion de Evolution Go"

@@ -5,6 +5,7 @@ import {
   Upload,
   Trash2,
   Merge,
+  RefreshCw,
 } from 'lucide-react';
 import { BaseHeader, HeaderAction, HeaderFilter } from '@/components/base';
 import { useUserPermissions } from '@/hooks/useUserPermissions';
@@ -23,6 +24,8 @@ interface ContactsHeaderProps {
   onClearSelection: () => void;
   activeFilters?: HeaderFilter[];
   showFilters?: boolean;
+  onSyncWhatsapp?: () => void;
+  syncingWhatsapp?: boolean;
 }
 
 export default function ContactsHeader({
@@ -39,6 +42,8 @@ export default function ContactsHeader({
   onClearSelection,
   activeFilters = [],
   showFilters = true,
+  onSyncWhatsapp,
+  syncingWhatsapp = false,
 }: ContactsHeaderProps) {
   const { t } = useLanguage('contacts');
   const { can, isReady } = useUserPermissions();
@@ -51,6 +56,20 @@ export default function ContactsHeader({
   } : undefined;
 
   const secondaryActions: HeaderAction[] = [
+    ...(isReady && can('contacts', 'import') && onSyncWhatsapp
+      ? [
+          {
+            label: t('header.syncWhatsapp'),
+            icon: (
+              <RefreshCw className={`h-4 w-4 ${syncingWhatsapp ? 'animate-spin' : ''}`} />
+            ),
+            onClick: onSyncWhatsapp,
+            variant: 'outline' as const,
+            disabled: syncingWhatsapp,
+            tooltip: t('header.syncWhatsappTooltip'),
+          },
+        ]
+      : []),
     ...(isReady && can('contacts', 'read') ? [{
       label: t('header.export'),
       icon: <Download className="h-4 w-4" />,

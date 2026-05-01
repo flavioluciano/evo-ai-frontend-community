@@ -87,6 +87,7 @@ export default function Contacts() {
   const [eventsContact, setEventsContact] = useState<Contact | null>(null);
   const [mergeModalOpen, setMergeModalOpen] = useState(false);
   const [contactsToMerge, setContactsToMerge] = useState<Contact[]>([]);
+  const [syncingWhatsapp, setSyncingWhatsapp] = useState(false);
 
   // Load contacts
   const loadContacts = useCallback(
@@ -514,6 +515,26 @@ export default function Contacts() {
     setExportModalOpen(true);
   };
 
+  const handleSyncWhatsappContacts = useCallback(async () => {
+    setSyncingWhatsapp(true);
+    try {
+      const result = await contactsService.syncWhatsappContactsFromEvolution();
+      if (result.queued === 0) {
+        toast.warning(t('messages.syncWhatsappNone'));
+      } else {
+        toast.success(t('messages.syncWhatsappQueued', { count: result.queued }));
+        window.setTimeout(() => {
+          loadContacts();
+        }, 5000);
+      }
+    } catch (error: unknown) {
+      console.error('Evolution WhatsApp contacts sync:', error);
+      toast.error(extractError(error).message || t('messages.syncWhatsappError'));
+    } finally {
+      setSyncingWhatsapp(false);
+    }
+  }, [t, loadContacts]);
+
   const handleImportModalSubmit = async (file: File) => {
     if (!can('contacts', 'read')) {
       toast.error('Você não tem permissão para visualizar contatos');
@@ -774,6 +795,8 @@ export default function Contacts() {
         onClearSelection={() => setState(prev => ({ ...prev, selectedContactIds: [] }))}
         activeFilters={appliedFilters}
         showFilters={true}
+        onSyncWhatsapp={handleSyncWhatsappContacts}
+        syncingWhatsapp={syncingWhatsapp}
       />
       </div>
 

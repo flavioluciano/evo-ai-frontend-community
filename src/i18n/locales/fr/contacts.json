@@ -442,7 +442,10 @@
     "exportQueued": "Exportation démarrée. Vous recevrez un e-mail avec le lien de téléchargement sous peu.",
     "exportError": "Erreur lors de l'exportation des contacts",
     "filterError": "Erreur lors de l'application des filtres",
-    "conversationStarted": "Conversation démarrée avec succès"
+    "conversationStarted": "Conversation démarrée avec succès",
+    "syncWhatsappQueued": "Synchronisation mise en file pour {{count}} boîte(s) WhatsApp Evolution. La liste sera mise à jour sous peu.",
+    "syncWhatsappNone": "Aucune boîte WhatsApp Evolution trouvée. Connectez d’abord un canal Evolution.",
+    "syncWhatsappError": "Impossible de démarrer la synchronisation des contacts WhatsApp"
   },
   "errors": {
     "loadContact": "Erreur lors du chargement des détails du contact"
@@ -594,6 +597,8 @@
     "filters": "Filtres",
     "bulkDelete": "Supprimer la Sélection",
     "mergeContacts": "Fusionner les Contacts",
+    "syncWhatsapp": "Synchroniser WhatsApp",
+    "syncWhatsappTooltip": "Récupérer les contacts depuis l’API Evolution (arrière-plan)",
     "clearSelection": "Effacer la Sélection",
     "selected": "{{count}} sélectionné",
     "selected_other": "{{count}} sélectionnés"

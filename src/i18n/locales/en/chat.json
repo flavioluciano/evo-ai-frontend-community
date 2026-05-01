@@ -2,6 +2,9 @@
   "messages": {
     "noPermissionView": "You don't have permission to view conversations",
     "noPermissionSend": "You don't have permission to send messages",
+    "syncWhatsappConversationsQueued": "Sync queued for {{count}} Evolution WhatsApp inbox(es). The list will refresh in a few seconds.",
+    "syncWhatsappConversationsNone": "No Evolution WhatsApp inbox found. Connect an Evolution channel first.",
+    "syncWhatsappConversationsError": "Could not start WhatsApp chats sync",
     "audioPlayer": {
       "defaultFilename": "Audio"
     },
@@ -282,6 +285,8 @@
     "filter": "filter",
     "filters": "filters",
     "filtersButton": "Filters",
+    "syncWhatsapp": "Sync chats",
+    "syncWhatsappTooltip": "Pull WhatsApp chat list from Evolution into CRM (runs in background; requires Sidekiq)",
     "view": {
       "active": "Active",
       "archived": "Archived"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { toast } from 'sonner';
 import { useLanguage } from '@/hooks/useLanguage';
 import {
@@ -675,7 +676,14 @@ const EvolutionWhatsAppConfig: React.FC<{
       }
     } catch (error) {
       console.error('Erro ao gerar QR Code:', error);
-      toast.error(t('settings.configuration.whatsapp.instance.errors.qrCodeError'));
+      const apiErr =
+        axios.isAxiosError(error) &&
+        error.response?.data &&
+        typeof error.response.data === 'object' &&
+        typeof (error.response.data as { error?: unknown }).error === 'string'
+          ? (error.response.data as { error: string }).error
+          : null;
+      toast.error(apiErr || t('settings.configuration.whatsapp.instance.errors.qrCodeError'));
     } finally {
       setIsLoading(false);
     }
@@ -1215,7 +1223,11 @@ const EvolutionWhatsAppConfig: React.FC<{
                   </div>
                 )}
 
-                <Button onClick={handleUpdateInstanceSettings} loading={isLoading} className="mt-6">
+                <Button
+                  onClick={handleUpdateInstanceSettings}
+                  loading={isLoading ? true : undefined}
+                  className="mt-6"
+                >
                   {t('settings.configuration.whatsapp.instance.saveSettings')}
                 </Button>
               </div>
@@ -2427,7 +2439,11 @@ const EmailChannelConfig: React.FC<{
         </CardContent>
       </Card>
 
-      <Button onClick={handleUpdateEmailSettings} loading={isUpdating} className="w-full">
+      <Button
+        onClick={handleUpdateEmailSettings}
+        loading={isUpdating ? true : undefined}
+        className="w-full"
+      >
         {t('settings.configuration.email.saveButton')}
       </Button>
     </div>

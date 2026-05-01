@@ -709,7 +709,7 @@ const MessageTemplateForm: React.FC<MessageTemplateFormProps> = ({
         </div>
         <div className="flex gap-2">
           {canSync && (
-            <Button variant="outline" onClick={handleSyncTemplates} loading={isSyncing}>
+            <Button variant="outline" onClick={handleSyncTemplates} loading={isSyncing ? true : undefined}>
               <RefreshCw className="w-4 h-4 mr-2" />
               {t('settings.messageTemplates.actions.sync')}
             </Button>

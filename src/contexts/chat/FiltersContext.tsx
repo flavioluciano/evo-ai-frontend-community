@@ -31,7 +31,7 @@ type FiltersAction =
 const DEFAULT_FILTER: ConversationFilter = {
   attribute_key: 'status',
   filter_operator: 'equal_to',
-  values: ['open'], // Array para API, mas será convertido para string no modal
+  values: ['open', 'pending'],
   query_operator: 'and',
 };
 

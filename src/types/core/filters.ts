@@ -514,5 +514,5 @@ export const DEFAULT_CONVERSATION_FILTER: BaseFilter = {
   ...DEFAULT_BASE_FILTER,
   attributeKey: 'status',
   filterOperator: 'equal_to',
-  values: 'open',
+  values: ['open', 'pending'],
 };

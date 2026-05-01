@@ -347,7 +347,8 @@ export interface ConversationListParams {
   per_page?: number;
   page_size?: number;
   pageSize?: number;
-  status?: 'open' | 'resolved' | 'pending' | 'snoozed' | 'all';
+  /** Single status or comma-separated list, e.g. `open,pending` */
+  status?: 'open' | 'resolved' | 'pending' | 'snoozed' | 'all' | string;
   assignee_type?: 'me' | 'unassigned' | 'all';
   assignee_id?: string;
   inbox_id?: string;
@@ -415,3 +416,8 @@ export type SenderType = 'contact' | 'agent_bot' | 'agent' | 'user';
 export type AvailabilityStatus = 'online' | 'busy' | 'offline';
 export type Priority = 'low' | 'medium' | 'high' | 'urgent' | null;
 export type QuickFilterTab = 'all' | 'mine' | 'unassigned';
+
+export interface SyncWhatsappConversationsResponse {
+  queued: number;
+  inbox_ids?: string[];
+}

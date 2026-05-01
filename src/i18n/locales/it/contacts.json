@@ -442,7 +442,10 @@
     "filterError": "Errore durante l'applicazione dei filtri",
     "conversationStarted": "Conversazione avviata con successo",
     "mergeSuccess": "Contatti uniti con successo",
-    "mergeError": "Errore durante l'unione dei contatti"
+    "mergeError": "Errore durante l'unione dei contatti",
+    "syncWhatsappQueued": "Sincronizzazione accodata per {{count}} inbox WhatsApp Evolution. L’elenco si aggiornerà a breve.",
+    "syncWhatsappNone": "Nessuna inbox WhatsApp Evolution trovata. Collega prima un canale Evolution.",
+    "syncWhatsappError": "Impossibile avviare la sincronizzazione dei contatti WhatsApp"
   },
   "errors": {
     "loadContact": "Errore durante il caricamento dei dettagli del contatto"
@@ -594,6 +597,8 @@
     "filters": "Filtri",
     "bulkDelete": "Elimina Selezionati",
     "mergeContacts": "Unisci Contatti",
+    "syncWhatsapp": "Sincronizza WhatsApp",
+    "syncWhatsappTooltip": "Scarica i contatti dall’API Evolution (in background)",
     "clearSelection": "Cancella Selezione",
     "selected": "{{count}} selezionato",
     "selected_other": "{{count}} selezionati"

@@ -235,17 +235,14 @@
     },
     "evolutionGo": {
       "tabTitle": "Evolution Go",
+      "instanceCredentialsHint": "L'UUID et le jeton d'instance sont crees par canal WhatsApp lors du jumelage QR ; ce ne sont pas des parametres globaux ici.",
       "fields": {
         "apiUrl": "URL de l'API",
-        "adminSecret": "Secret Admin",
-        "instanceId": "ID d'Instance",
-        "instanceSecret": "Secret d'Instance"
+        "adminSecret": "Secret Admin"
       },
       "placeholders": {
         "apiUrl": "https://evolution-go.exemple.com",
-        "adminSecret": "Entrez le nouveau secret admin",
-        "instanceId": "Votre Evolution Go Instance ID",
-        "instanceSecret": "Entrez le nouveau secret d'instance"
+        "adminSecret": "Entrez le nouveau secret admin"
       },
       "saveSuccess": "Configuration Evolution Go enregistree avec succes",
       "saveError": "Echec de l'enregistrement de la configuration Evolution Go"

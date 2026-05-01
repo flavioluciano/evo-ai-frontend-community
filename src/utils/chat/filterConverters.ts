@@ -59,6 +59,8 @@ export const convertFiltersToUrlParams = (
       case 'status':
         if (values.length === 1) {
           params.status = values[0] as ConversationListParams['status'];
+        } else if (values.length > 1) {
+          params.status = values.join(',') as ConversationListParams['status'];
         }
         break;
 

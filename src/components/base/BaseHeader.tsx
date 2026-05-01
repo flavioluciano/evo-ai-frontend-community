@@ -175,8 +175,10 @@ export default function BaseHeader({
                 variant={action.variant || 'outline'}
                 size="sm"
                 onClick={action.onClick}
+                disabled={action.disabled}
                 className="bg-sidebar border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent"
                 data-tour={action.dataTour}
+                title={action.tooltip}
               >
                 {renderIcon()}
                 {action.label}

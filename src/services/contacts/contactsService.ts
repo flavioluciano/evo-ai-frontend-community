@@ -17,6 +17,7 @@ import type {
   ContactNote,
   ContactConversation,
   ContactableInboxes,
+  SyncWhatsappContactsResponse,
 } from '@/types/contacts';
 
 class ContactsService {
@@ -344,6 +345,14 @@ class ContactsService {
   }
 
   // Import/Export
+  /** Queue Evolution API contact sync (pull findContacts → CRM). Requires contacts.import permission. */
+  async syncWhatsappContactsFromEvolution(inboxId?: string): Promise<SyncWhatsappContactsResponse> {
+    const response = await api.post(`/contacts/sync_whatsapp`, {
+      ...(inboxId ? { inbox_id: inboxId } : {}),
+    });
+    return extractData<SyncWhatsappContactsResponse>(response);
+  }
+
   async importContacts(file: File): Promise<ContactImportResponse> {
     const formData = new FormData();
     formData.append('import_file', file);

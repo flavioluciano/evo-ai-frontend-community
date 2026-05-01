@@ -366,3 +366,8 @@ export interface ContactActionsMenuProps {
   onDelete: (contact: Contact) => void;
   onStartConversation: (contact: Contact) => void;
 }
+
+export interface SyncWhatsappContactsResponse {
+  queued: number;
+  inbox_ids?: string[];
+}

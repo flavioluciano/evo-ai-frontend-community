@@ -100,8 +100,6 @@ const EMPTY_EVOLUTION = {
 const EMPTY_EVOLUTION_GO = {
   EVOLUTION_GO_API_URL: '',
   EVOLUTION_GO_ADMIN_SECRET: null,
-  EVOLUTION_GO_INSTANCE_ID: '',
-  EVOLUTION_GO_INSTANCE_SECRET: null,
 };
 
 const EMPTY_TWITTER = {
@@ -119,8 +117,6 @@ const CONFIGURED_EVOLUTION = {
 const CONFIGURED_EVOLUTION_GO = {
   EVOLUTION_GO_API_URL: 'https://evo-go.test.com',
   EVOLUTION_GO_ADMIN_SECRET: '••••masked',
-  EVOLUTION_GO_INSTANCE_ID: 'test-instance-id',
-  EVOLUTION_GO_INSTANCE_SECRET: '••••masked',
 };
 
 const CONFIGURED_TWITTER = {
@@ -473,8 +469,7 @@ describe('ChannelConfig', () => {
       expect(screen.getByLabelText('channels.evolutionGo.fields.apiUrl')).toBeInTheDocument();
     });
     expect(screen.getByLabelText('channels.evolutionGo.fields.adminSecret')).toBeInTheDocument();
-    expect(screen.getByLabelText('channels.evolutionGo.fields.instanceId')).toBeInTheDocument();
-    expect(screen.getByLabelText('channels.evolutionGo.fields.instanceSecret')).toBeInTheDocument();
+    expect(screen.getByText('channels.evolutionGo.instanceCredentialsHint')).toBeInTheDocument();
   });
 
   it('saves Evolution Go tab independently via evolution_go config type', async () => {
@@ -493,7 +488,6 @@ describe('ChannelConfig', () => {
     await waitFor(() => {
       expect(mockSaveConfig).toHaveBeenCalledWith('evolution_go', expect.objectContaining({
         EVOLUTION_GO_API_URL: 'https://evo-go.test.com',
-        EVOLUTION_GO_INSTANCE_ID: 'test-instance-id',
       }));
     });
   });
@@ -551,7 +545,6 @@ describe('ChannelConfig', () => {
     await waitFor(() => {
       expect(mockSaveConfig).toHaveBeenCalledWith('evolution_go', expect.objectContaining({
         EVOLUTION_GO_ADMIN_SECRET: null,
-        EVOLUTION_GO_INSTANCE_SECRET: null,
       }));
     });
   });
@@ -641,18 +634,16 @@ describe('ChannelConfig', () => {
       expect(screen.getByLabelText('channels.evolutionGo.fields.adminSecret')).toBeInTheDocument();
     });
 
-    // Evolution Go has 2 configured secrets
     const configuredBefore = screen.getAllByText('channels.secretConfigured');
-    expect(configuredBefore.length).toBe(2);
+    expect(configuredBefore.length).toBe(1);
 
     const clearButtons = screen.getAllByTitle('channels.clearSecret');
     await act(async () => {
       fireEvent.click(clearButtons[0]);
     });
 
-    // One fewer configured indicator
-    const configuredAfter = screen.getAllByText('channels.secretConfigured');
-    expect(configuredAfter.length).toBe(1);
+    const configuredAfter = screen.queryAllByText('channels.secretConfigured');
+    expect(configuredAfter.length).toBe(0);
   });
 
   it('clear secret on Twitter tab marks secret as modified', async () => {

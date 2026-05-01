@@ -2,6 +2,9 @@
   "messages": {
     "noPermissionView": "Vous n'avez pas la permission de voir les conversations",
     "noPermissionSend": "Vous n'avez pas la permission d'envoyer des messages",
+    "syncWhatsappConversationsQueued": "Synchronisation des chats mise en file pour {{count}} boîte(s) WhatsApp Evolution. La liste sera mise à jour sous peu.",
+    "syncWhatsappConversationsNone": "Aucune boîte WhatsApp Evolution trouvée. Connectez d’abord un canal Evolution.",
+    "syncWhatsappConversationsError": "Impossible de démarrer la synchronisation des chats WhatsApp",
     "audioPlayer": {
       "defaultFilename": "Audio"
     },
@@ -277,6 +280,8 @@
     "filter": "filtre",
     "filters": "filtres",
     "filtersButton": "Filtres",
+    "syncWhatsapp": "Synchroniser les chats",
+    "syncWhatsappTooltip": "Récupérer la liste des chats depuis Evolution (arrière-plan)",
     "view": {
       "active": "Actives",
       "archived": "Archivees"

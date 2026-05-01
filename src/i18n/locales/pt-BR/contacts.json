@@ -450,7 +450,10 @@
     "exportQueued": "Exportação iniciada. Você receberá um email com o link para download em breve.",
     "exportError": "Erro ao exportar contatos",
     "filterError": "Erro ao aplicar filtros",
-    "conversationStarted": "Conversa iniciada com sucesso"
+    "conversationStarted": "Conversa iniciada com sucesso",
+    "syncWhatsappQueued": "Sincronização enviada para {{count}} caixa(s) WhatsApp (Evolution). A lista será atualizada em alguns segundos.",
+    "syncWhatsappNone": "Nenhuma caixa WhatsApp Evolution encontrada. Configure um canal Evolution conectado primeiro.",
+    "syncWhatsappError": "Não foi possível iniciar a sincronização dos contatos WhatsApp"
   },
   "errors": {
     "loadContact": "Erro ao carregar detalhes do contato"
@@ -602,6 +605,8 @@
     "filters": "Filtros",
     "bulkDelete": "Deletar Selecionados",
     "mergeContacts": "Mesclar Contatos",
+    "syncWhatsapp": "Sincronizar WhatsApp",
+    "syncWhatsappTooltip": "Buscar contatos na Evolution API e atualizar a lista do CRM (processo em segundo plano)",
     "clearSelection": "Limpar Seleção",
     "selected": "{{count}} selecionado",
     "selected_other": "{{count}} selecionados"

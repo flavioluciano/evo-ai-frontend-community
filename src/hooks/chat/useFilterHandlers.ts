@@ -40,7 +40,7 @@ export const useFilterHandlers = () => {
       clearConversationFilters();
 
       // 🎯 FILTRO PADRÃO: Carregar apenas conversas abertas ao limpar filtros
-      await conversations.loadConversations({ status: 'open' });
+      await conversations.loadConversations({ status: 'open,pending' });
     } catch (error) {
       console.error('❌ Erro inesperado ao limpar filtros:', error);
     }
@@ -75,7 +75,7 @@ export const useFilterHandlers = () => {
       }
       // 🎯 FILTRO PADRÃO: Se não há filtros nem busca, carregar apenas conversas abertas
       else {
-        await conversations.loadConversations({ status: 'open' });
+        await conversations.loadConversations({ status: 'open,pending' });
       }
     } catch (error) {
       console.error('❌ Erro inesperado ao recarregar filtros:', error);

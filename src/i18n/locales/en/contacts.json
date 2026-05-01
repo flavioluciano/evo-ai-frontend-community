@@ -450,7 +450,10 @@
     "exportQueued": "Export started. You will receive an email with the download link shortly.",
     "exportError": "Error exporting contacts",
     "filterError": "Error applying filters",
-    "conversationStarted": "Conversation started successfully"
+    "conversationStarted": "Conversation started successfully",
+    "syncWhatsappQueued": "Sync queued for {{count}} Evolution WhatsApp inbox(es). The list will refresh shortly.",
+    "syncWhatsappNone": "No Evolution WhatsApp inbox found. Connect an Evolution channel first.",
+    "syncWhatsappError": "Could not start WhatsApp contacts sync"
   },
   "errors": {
     "loadContact": "Error loading contact details"
@@ -602,6 +605,8 @@
     "filters": "Filters",
     "bulkDelete": "Delete Selected",
     "mergeContacts": "Merge Contacts",
+    "syncWhatsapp": "Sync WhatsApp",
+    "syncWhatsappTooltip": "Pull contacts from Evolution API into CRM (runs in background)",
     "clearSelection": "Clear Selection",
     "selected": "{{count}} selected",
     "selected_other": "{{count}} selected"
