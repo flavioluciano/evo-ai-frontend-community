@@ -2,9 +2,6 @@
   "messages": {
     "noPermissionView": "No tienes permiso para ver conversaciones",
     "noPermissionSend": "No tienes permiso para enviar mensajes",
-    "syncWhatsappConversationsQueued": "Sincronización de chats en cola para {{count}} bandeja(s) WhatsApp Evolution. La lista se actualizará en breve.",
-    "syncWhatsappConversationsNone": "No hay bandeja WhatsApp Evolution. Conecte un canal Evolution primero.",
-    "syncWhatsappConversationsError": "No se pudo iniciar la sincronización de chats de WhatsApp",
     "audioPlayer": {
       "defaultFilename": "Audio"
     },
@@ -280,8 +277,6 @@
     "filter": "filtro",
     "filters": "filtros",
     "filtersButton": "Filtros",
-    "syncWhatsapp": "Sincronizar chats",
-    "syncWhatsappTooltip": "Obtener chats desde Evolution (segundo plano)",
     "view": {
       "active": "Activas",
       "archived": "Archivadas"
@@ -455,10 +450,6 @@
       "assignee": {
         "title": "Asignación de Conversación",
         "options": {
-          "all": {
-            "label": "Todas las conversaciones",
-            "description": "Todas las conversaciones del equipo"
-          },
           "me": {
             "label": "Mis conversaciones",
             "description": "Solo conversaciones asignadas a mí"
@@ -467,8 +458,7 @@
             "label": "No asignadas",
             "description": "Conversaciones sin Agente asignado"
           }
-        },
-        "showAll": "Mostrar todas las conversaciones"
+        }
       },
       "inbox": {
         "title": "Canales de Atención",
@@ -710,8 +700,7 @@
       "assignee_type": {
         "me": "Asignado a mí",
         "assigned": "Asignado",
-        "unassigned": "No asignado",
-        "all": "Todos"
+        "unassigned": "No asignado"
       },
       "priority": {
         "low": "Baja",

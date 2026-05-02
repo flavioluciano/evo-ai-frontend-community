@@ -56,23 +56,28 @@ export const convertFiltersToUrlParams = (
     const { attribute_key, values } = filter;
 
     switch (attribute_key) {
-      case 'status':
-        if (values.length === 1) {
-          params.status = values[0] as ConversationListParams['status'];
-        } else if (values.length > 1) {
-          params.status = values.join(',') as ConversationListParams['status'];
+      case 'status': {
+        const tokens = values
+          .flatMap(v => String(v).split(','))
+          .map(s => s.trim())
+          .filter(Boolean);
+        if (tokens.length === 1) {
+          params.status = tokens[0] as ConversationListParams['status'];
+        } else if (tokens.length > 1) {
+          params.status = tokens.join(',') as ConversationListParams['status'];
         }
         break;
+      }
 
+      // Modal usa attribute_key "assignee_type"; GET /conversations só entende assignee_type na query
       case 'assignee_id':
-        if (values.length === 1) {
-          const value = values[0];
-          if (value === 'me') {
-            params.assignee_type = 'me';
-          } else if (value === 'unassigned') {
-            params.assignee_type = 'unassigned';
-          } else {
-            params.assignee_id = value as string;
+      case 'assignee_type':
+        if (values.length >= 1) {
+          const value = String(values[0]);
+          if (value === 'me' || value === 'unassigned' || value === 'assigned') {
+            params.assignee_type = value as ConversationListParams['assignee_type'];
+          } else if (attribute_key === 'assignee_id') {
+            params.assignee_id = value;
           }
         }
         break;

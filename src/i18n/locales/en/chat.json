@@ -2,9 +2,6 @@
   "messages": {
     "noPermissionView": "You don't have permission to view conversations",
     "noPermissionSend": "You don't have permission to send messages",
-    "syncWhatsappConversationsQueued": "Sync queued for {{count}} Evolution WhatsApp inbox(es). The list will refresh in a few seconds.",
-    "syncWhatsappConversationsNone": "No Evolution WhatsApp inbox found. Connect an Evolution channel first.",
-    "syncWhatsappConversationsError": "Could not start WhatsApp chats sync",
     "audioPlayer": {
       "defaultFilename": "Audio"
     },
@@ -285,8 +282,6 @@
     "filter": "filter",
     "filters": "filters",
     "filtersButton": "Filters",
-    "syncWhatsapp": "Sync chats",
-    "syncWhatsappTooltip": "Pull WhatsApp chat list from Evolution into CRM (runs in background; requires Sidekiq)",
     "view": {
       "active": "Active",
       "archived": "Archived"
@@ -482,10 +477,6 @@
       "assignee": {
         "title": "Conversation Assignment",
         "options": {
-          "all": {
-            "label": "All conversations",
-            "description": "All team conversations"
-          },
           "me": {
             "label": "My conversations",
             "description": "Only conversations assigned to me"
@@ -494,8 +485,7 @@
             "label": "Unassigned",
             "description": "Conversations without assigned Team Member"
           }
-        },
-        "showAll": "Show all conversations"
+        }
       },
       "inbox": {
         "title": "Support Channels",
@@ -747,8 +737,7 @@
       "assignee_type": {
         "me": "Assigned to me",
         "assigned": "Assigned",
-        "unassigned": "Unassigned",
-        "all": "All"
+        "unassigned": "Unassigned"
       },
       "priority": {
         "low": "Low",

@@ -16,7 +16,6 @@ import {
   Team,
   Inbox,
   Pipeline,
-  SyncWhatsappConversationsResponse,
 } from '@/types/chat/api';
 import { extractData } from '@/utils/apiHelpers';
 
@@ -39,16 +38,6 @@ class ChatService {
   async filterConversations(filterRequest: FilterRequest): Promise<ConversationsListResponse> {
     const response = await api.post('/conversations/filter', filterRequest);
     return response.data;
-  }
-
-  /** Queue Evolution API chat list sync into CRM conversations (Sidekiq). Requires conversations.update. */
-  async syncWhatsappConversationsFromEvolution(
-    inboxId?: string,
-  ): Promise<SyncWhatsappConversationsResponse> {
-    const response = await api.post('/conversations/sync_whatsapp', {
-      ...(inboxId ? { inbox_id: inboxId } : {}),
-    });
-    return extractData<SyncWhatsappConversationsResponse>(response);
   }
 
   // ✅ Novos métodos para carregar opções de filtro

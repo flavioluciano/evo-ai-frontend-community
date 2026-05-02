@@ -1,7 +1,11 @@
 import { useCallback } from 'react';
 import { useChatContext } from '@/contexts/chat/ChatContext';
 import { BaseFilter } from '@/types/core';
-import { convertBaseFiltersToConversationFilters } from '@/utils/chat/filterAdapters';
+import {
+  convertBaseFiltersToConversationFilters,
+  normalizeBaseFiltersAfterStrippingAssigneeAll,
+  normalizeConversationFiltersAfterStrippingAssigneeAll,
+} from '@/utils/chat/filterAdapters';
 import { saveConversationFilters, clearConversationFilters } from '@/utils/storage/filtersStorage';
 
 export const useFilterHandlers = () => {
@@ -9,8 +13,8 @@ export const useFilterHandlers = () => {
 
   const handleApplyFilters = useCallback(
     async (newFilters: BaseFilter[]) => {
-      // Converter BaseFilter para ConversationFilter e aplicar
-      const apiFilters = convertBaseFiltersToConversationFilters(newFilters);
+      const normalizedBase = normalizeBaseFiltersAfterStrippingAssigneeAll(newFilters);
+      const apiFilters = convertBaseFiltersToConversationFilters(normalizedBase);
 
       return new Promise<void>((resolve, reject) => {
         filters.applyFilters(
@@ -20,7 +24,7 @@ export const useFilterHandlers = () => {
             conversations.setConversations(conversationsResult, pagination);
 
             // 💾 PERSISTIR: Salvar filtros aplicados no localStorage
-            saveConversationFilters(newFilters);
+            saveConversationFilters(normalizedBase);
             resolve();
           },
           error => {
@@ -51,8 +55,11 @@ export const useFilterHandlers = () => {
     try {
       // Se há filtros ativos, reaplicar
       if (filters.state.activeFilters.length > 0) {
-        await filters.applyFilters(
+        const normalized = normalizeConversationFiltersAfterStrippingAssigneeAll(
           filters.state.activeFilters,
+        );
+        await filters.applyFilters(
+          normalized,
           (conversationsResult, pagination) => {
             conversations.setConversations(conversationsResult, pagination);
           },

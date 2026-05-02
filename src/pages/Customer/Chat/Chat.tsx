@@ -14,6 +14,7 @@ import { useAssignmentHandlers } from '@/hooks/chat/useAssignmentHandlers';
 import { useFilterHandlers } from '@/hooks/chat/useFilterHandlers';
 
 import { loadConversationFilters, getDefaultFilter } from '@/utils/storage/filtersStorage';
+import { normalizeBaseFiltersAfterStrippingAssigneeAll } from '@/utils/chat/filterAdapters';
 
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
@@ -159,9 +160,11 @@ const Chat = () => {
       return;
     }
 
-    // 💾 PERSISTÊNCIA: Carregar filtros salvos ou usar padrão
+    // 💾 PERSISTÊNCIA: Carregar filtros salvos ou usar padrão (sem assignee_type "all")
     const savedFilters = loadConversationFilters();
-    const filtersToApply = savedFilters || getDefaultFilter();
+    const filtersToApply = normalizeBaseFiltersAfterStrippingAssigneeAll(
+      savedFilters || getDefaultFilter(),
+    );
 
     // Aplicar filtros (erros serão tratados no filterHandlers)
     handleApplyFilters(filtersToApply).catch(error => {

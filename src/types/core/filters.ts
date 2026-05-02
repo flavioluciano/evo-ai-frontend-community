@@ -363,7 +363,6 @@ export const CONVERSATION_FILTER_TYPES: FilterType[] = [
       { label: 'conversationsFilter.options.assignee_type.me', value: 'me' },
       { label: 'conversationsFilter.options.assignee_type.assigned', value: 'assigned' },
       { label: 'conversationsFilter.options.assignee_type.unassigned', value: 'unassigned' },
-      { label: 'conversationsFilter.options.assignee_type.all', value: 'all' },
     ],
   },
   {
