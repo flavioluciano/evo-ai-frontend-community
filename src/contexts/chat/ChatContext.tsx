@@ -45,7 +45,8 @@ function doesConversationMatchFilters(
       case 'inbox_id':
         conversationValue = conversation.inbox_id ? String(conversation.inbox_id) : undefined;
         break;
-      case 'assignee_id': {
+      case 'assignee_id':
+      case 'assignee_type': {
         const val = String(values[0]);
         if (val === 'me') {
           const meMatches = currentUserId
@@ -74,17 +75,22 @@ function doesConversationMatchFilters(
         return true;
     }
 
+    const matchValues =
+      attribute_key === 'status'
+        ? stringValues.flatMap(v => v.split(',').map(s => s.trim())).filter(Boolean)
+        : stringValues;
+
     if (filter_operator === 'equal_to') {
-      return conversationValue != null && stringValues.includes(String(conversationValue));
+      return conversationValue != null && matchValues.includes(String(conversationValue));
     }
     if (filter_operator === 'not_equal_to') {
-      return conversationValue == null || !stringValues.includes(String(conversationValue));
+      return conversationValue == null || !matchValues.includes(String(conversationValue));
     }
     if (filter_operator === 'contains') {
-      return conversationValue != null && stringValues.some(v => String(conversationValue).includes(v));
+      return conversationValue != null && matchValues.some(v => String(conversationValue).includes(v));
     }
     if (filter_operator === 'does_not_contain') {
-      return conversationValue == null || !stringValues.some(v => String(conversationValue).includes(v));
+      return conversationValue == null || !matchValues.some(v => String(conversationValue).includes(v));
     }
 
     return true;
@@ -203,10 +209,6 @@ function useChatIntegration() {
         };
         const conversation = findConversationByAnyId(conversationId);
 
-        if (!conversation && activeFiltersRef.current.length > 0) {
-          return;
-        }
-
         if (processedMessageIdsRef.current.has(message.id)) {
           return;
         }
@@ -272,6 +274,17 @@ function useChatIntegration() {
           if (message.message_type === MESSAGE_TYPE.INCOMING) {
             conversations.incrementUnreadCount(targetConversationId);
           }
+          void conversations
+            .loadSpecificConversation(conversationId, { addToList: false, silent: true })
+            .then(loaded => {
+              if (!loaded) return;
+              const filtersNow = activeFiltersRef.current;
+              if (doesConversationMatchFilters(loaded, filtersNow, currentUser?.id)) {
+                conversations.addConversation(loaded);
+              } else {
+                conversations.addHiddenConversation(loaded);
+              }
+            });
           return;
         }
 
